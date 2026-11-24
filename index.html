@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoffeeCol / Tantico Café | Café Especial del Huila – Solución TIC</title>
+  <meta name="description" content="Plataforma web de comercio electrónico, trazabilidad de origen y fidelización para productores de café especial del Huila (CoffeeCol / Tantico Café)." />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --coffee-dark: #2c1810;
+      --coffee-primary: #5c3317;
+      --coffee-accent: #c87d4b;
+      --coffee-cream: #faf5ef;
+      --coffee-gold: #d4a359;
+      --coffee-green: #2d6a4f;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--coffee-cream);
+      color: #261a14;
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, .brand-font {
+      font-family: 'Playfair Display', serif;
+    }
+    .navbar {
+      background: rgba(44, 24, 16, 0.96);
+      backdrop-filter: blur(10px);
+    }
+    .hero-section {
+      background: linear-gradient(135deg, rgba(35, 18, 11, 0.88), rgba(74, 40, 22, 0.80)),
+                  url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: #fff;
+      padding: 6.5rem 0 5rem;
+    }
+    .badge-origin {
+      background-color: rgba(212, 163, 89, 0.22);
+      border: 1px solid var(--coffee-gold);
+      color: #ffe3b3;
+      padding: 0.45rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .btn-coffee {
+      background-color: var(--coffee-accent);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-coffee:hover {
+      background-color: #b06738;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn-outline-coffee {
+      border: 2px solid var(--coffee-primary);
+      color: var(--coffee-primary);
+      font-weight: 600;
+      border-radius: 8px;
+    }
+    .btn-outline-coffee.active, .btn-outline-coffee:hover {
+      background-color: var(--coffee-primary);
+      color: #fff;
+    }
+    .product-card {
+      border: 1px solid rgba(92, 51, 23, 0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      height: 100%;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(44, 24, 16, 0.12);
+    }
+    .product-img {
+      height: 195px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .fav-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.92);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #a0a0a0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .fav-btn.active {
+      color: #dc3545;
+    }
+    .huila-map-box {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(92, 51, 23, 0.15);
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(44,24,16,0.06);
+    }
+    .muni-node {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .muni-node:hover circle, .muni-node.active circle {
+      fill: #c87d4b;
+      r: 11;
+    }
+    .tier-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(92, 51, 23, 0.15);
+      padding: 1.5rem;
+      height: 100%;
+    }
+    .kpi-card {
+      background: #fff;
+      border-left: 5px solid var(--coffee-accent);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    }
+    .fab-cart {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1040;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--coffee-primary);
+      color: #fff;
+      border: 2px solid var(--coffee-gold);
+      box-shadow: 0 8px 22px rgba(44, 24, 16, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    footer {
+      background-color: var(--coffee-dark);
+      color: #e4d7ce;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="#">
+        <i class="bi bi-cup-hot-fill text-warning fs-4"></i>
+        <span class="brand-font fs-4">CoffeeCol <small class="fw-normal fs-6 text-warning">/ Tantico Café</small></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-2">
+          <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#origen">Mapa del Huila</a></li>
+          <li class="nav-item"><a class="nav-link" href="#catalogo">Catálogo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#fidelizacion">Puntos Tantico</a></li>
+          <li class="nav-item"><a class="nav-link" href="#analitica">Panel KPIs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto">Caficultores / Contacto</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <i class="bi bi-person-circle me-1"></i> <span id="userLabel">Iniciar sesión</span>
+          </button>
+          <button class="btn btn-coffee btn-sm" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer">
+            <i class="bi bi-bag-check me-1"></i> Carrito (<span id="navCartCount">0</span>)
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header id="inicio" class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="badge-origin d-inline-block mb-3">
+            <i class="bi bi-geo-alt-fill me-1"></i> Comercio directo sin intermediarios · Neiva, Huila
+          </span>
+          <h1 class="display-4 fw-bold mb-3">Café Especial del Huila directo de la finca a tu taza</h1>
+          <p class="lead text-light opacity-90 mb-4">
+            <strong>CoffeeCol / Tantico Café</strong> conecta a pequeños y medianos caficultores huilenses con consumidores de todo el país: trazabilidad geográfica por municipio, tueste fresco bajo pedido y programa de puntos canjeables.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#catalogo" class="btn btn-coffee btn-lg">
+              <i class="bi bi-cart-plus me-2"></i>Explorar Catálogo
+            </a>
+            <a href="#origen" class="btn btn-outline-light btn-lg">
+              <i class="bi bi-map me-2"></i>Explorar Origen Huila
+            </a>
+          </div>
+          <div class="row g-3 mt-4 pt-3 border-top border-secondary">
+            <div class="col-4">
+              <div class="h4 fw-bold text-warning mb-0">37</div>
+              <small class="text-light opacity-75">Municipios cafeteros</small>
+            </div>
+            <div class="col-4">
+              <div class="h4 fw-bold text-warning mb-0">86+ pts</div>
+              <small class="text-light opacity-75">Puntaje SCA Especialidad</small>
+            </div>
+            <div class="col-4">
+              <div class="h4 fw-bold text-warning mb-0">100%</div>
+              <small class="text-light opacity-75">Trazabilidad digital</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="bg-dark bg-opacity-75 p-4 rounded-4 border border-secondary shadow-lg">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge bg-warning text-dark fw-bold">Cosecha Especial 2026</span>
+              <span class="text-warning small"><i class="bi bi-star-fill"></i> 4.9 / 5.0</span>
+            </div>
+            <h4 class="brand-font text-white mb-2">Lote Microlote San Agustín – Variedad Pink Bourbon</h4>
+            <p class="small text-light opacity-75 mb-3">
+              Cultivado a 1.850 m s. n. m. Notas a panela, frutos rojos, flor de azahar y acidez cítrica brillante.Envío gratis en pedidos superiores a $150.000 COP.
+            </p>
+            <div class="d-flex justify-content-between align-items-center bg-black bg-opacity-50 p-3 rounded-3 mb-3">
+              <div>
+                <small class="text-secondary d-block">Presentación 500 g</small>
+                <span class="fs-4 fw-bold text-warning">$48.000 COP</span>
+              </div>
+              <button class="btn btn-coffee" onclick="addToCart(5)">
+                <i class="bi bi-plus-circle me-1"></i> Agregar
+              </button>
+            </div>
+            <div class="small text-light opacity-75 d-flex justify-content-between">
+              <span><i class="bi bi-shield-check text-success me-1"></i>Pago y orden verificados</span>
+              <span><i class="bi bi-award text-warning me-1"></i>+48 pts Tantico</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAPA INTERACTIVO DEL HUILA (RF-002 / HU-01) -->
+  <section id="origen" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="text-uppercase fw-bold small" style="color: var(--coffee-accent);">Trazabilidad Geográfica (HU-01 · RF-002)</span>
+        <h2 class="display-6 fw-bold mt-1">Mapa Interactivo de Orígenes Cafeteros del Huila</h2>
+        <p class="text-muted mx-auto" style="max-width: 720px;">
+          Selecciona una subregión productora en el mapa vectorial SVG o en las tarjetas para consultar su altitud, perfil sensorial, variedades cultivadas y disponibilidad en tienda.
+        </p>
+      </div>
+
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <div class="huila-map-box text-center">
+            <svg viewBox="0 0 420 460" class="w-100" style="max-height: 390px;" role="img" aria-label="Mapa cafetero interactivo del departamento del Huila">
+              <defs>
+                <linearGradient id="huilaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#e9d5c0;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#c9a683;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <!-- Silueta estilizada del Huila -->
+              <path d="M240,25 L295,60 L315,120 L285,185 L265,245 L245,310 L200,385 L140,435 L95,410 L105,345 L135,280 L155,215 L185,140 L205,70 Z"
+                    fill="url(#huilaGrad)" stroke="#5c3317" stroke-width="3" />
+              <!-- Río Magdalena -->
+              <path d="M140,420 Q180,320 210,230 T255,40" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="5,4" />
+
+              <!-- Nodos de Municipios -->
+              <g class="muni-node active" id="node-neiva" onclick="selectOrigin('neiva')">
+                <circle cx="242" cy="95" r="9" fill="#5c3317" stroke="#fff" stroke-width="2"></circle>
+                <text x="257" y="99" font-size="13" font-weight="bold" fill="#2c1810">Neiva (Norte)</text>
+              </g>
+              <g class="muni-node" id="node-algeciras" onclick="selectOrigin('algeciras')">
+                <circle cx="268" cy="155" r="8" fill="#5c3317" stroke="#fff" stroke-width="2"></circle>
+                <text x="282" y="159" font-size="12" font-weight="bold" fill="#2c1810">Algeciras</text>
+              </g>
+              <g class="muni-node" id="node-garzon" onclick="selectOrigin('garzon')">
+                <circle cx="232" cy="235" r="8" fill="#5c3317" stroke="#fff" stroke-width="2"></circle>
+                <text x="246" y="239" font-size="12" font-weight="bold" fill="#2c1810">Garzón (Centro)</text>
+              </g>
+              <g class="muni-node" id="node-acevedo" onclick="selectOrigin('acevedo')">
+                <circle cx="212" cy="335" r="8" fill="#5c3317" stroke="#fff" stroke-width="2"></circle>
+                <text x="226" y="339" font-size="12" font-weight="bold" fill="#2c1810">Acevedo</text>
+              </g>
+              <g class="muni-node" id="node-pitalito" onclick="selectOrigin('pitalito')">
+                <circle cx="170" cy="370" r="9" fill="#5c3317" stroke="#fff" stroke-width="2"></circle>
+                <text x="72" y="374" font-size="13" font-weight="bold" fill="#2c1810">Pitalito (Sur)</text>
+              </g>
+              <g class="muni-node" id="node-sanagustin" onclick="selectOrigin('sanagustin')">
+                <circle cx="132" cy="405" r="9" fill="#5c3317" stroke="#fff" stroke-width="2"></circle>
+                <text x="147" y="415" font-size="13" font-weight="bold" fill="#2c1810">San Agustín</text>
+              </g>
+            </svg>
+            <div class="d-flex flex-wrap justify-content-center gap-2 mt-2">
+              <button class="btn btn-sm btn-outline-coffee active" onclick="selectOrigin('neiva')">Neiva</button>
+              <button class="btn btn-sm btn-outline-coffee" onclick="selectOrigin('garzon')">Garzón</button>
+              <button class="btn btn-sm btn-outline-coffee" onclick="selectOrigin('pitalito')">Pitalito</button>
+              <button class="btn btn-sm btn-outline-coffee" onclick="selectOrigin('sanagustin')">San Agustín</button>
+              <button class="btn btn-sm btn-outline-coffee" onclick="selectOrigin('acevedo')">Acevedo</button>
+              <button class="btn btn-sm btn-outline-coffee" onclick="selectOrigin('algeciras')">Algeciras</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="huila-map-box">
+            <span class="badge bg-success mb-2" id="originSubregion">Subregión Norte · Denominación de Origen Huila</span>
+            <h3 class="brand-font fw-bold mb-2" id="originTitle">Neiva – Veredas San Luis y El Colegio</h3>
+            <p class="text-muted mb-3" id="originDesc">
+              Centro de acopio, tostión artesanal y microlotes cultivados en las estribaciones de la cordillera Oriental. Destaca por su balance entre dulzor a caña panelera, cuerpo sedoso y notas achocolatadas.
+            </p>
+            <div class="row g-3 mb-4">
+              <div class="col-6">
+                <div class="p-3 rounded-3 bg-light">
+                  <small class="text-muted d-block">Altitud de cultivo</small>
+                  <strong id="originAltitude">1.450 – 1.750 m s. n. m.</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 rounded-3 bg-light">
+                  <small class="text-muted d-block">Variedades predominantes</small>
+                  <strong id="originVarieties">Castillo, Caturra, Colombia</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 rounded-3 bg-light">
+                  <small class="text-muted d-block">Notas sensoriales SCA</small>
+                  <strong id="originNotes">Chocolate oscuro, nuez, caramelo</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-3 rounded-3 bg-light">
+                  <small class="text-muted d-block">Familias vinculadas</small>
+                  <strong id="originProducers">34 familias caficultoras</strong>
+                </div>
+              </div>
+            </div>
+            <a href="#catalogo" class="btn btn-coffee w-100">
+              <i class="bi bi-funnel me-1"></i> Ver cafés disponibles de esta región en el catálogo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO FILTRABLE (RF-006 a RF-010 / HU-02) -->
+  <section id="catalogo" class="py-5 bg-white border-top border-bottom">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+        <div>
+          <span class="text-uppercase fw-bold small" style="color: var(--coffee-accent);">Tienda en Línea (HU-02 · RF-006 a RF-008)</span>
+          <h2 class="display-6 fw-bold mt-1 mb-0">Catálogo de Café de Especialidad</h2>
+        </div>
+        <div class="mt-3 mt-md-0">
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="bi bi-search"></i></span>
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por origen, variedad o tueste..." oninput="renderProducts()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtros por las 5 categorías del SRS -->
+      <div class="d-flex flex-wrap gap-2 mb-4" id="categoryFilters">
+        <button class="btn btn-outline-coffee active" onclick="filterCat('todos', this)">Todos (8)</button>
+        <button class="btn btn-outline-coffee" onclick="filterCat('Tueste Claro', this)">Tueste Claro</button>
+        <button class="btn btn-outline-coffee" onclick="filterCat('Tueste Medio', this)">Tueste Medio</button>
+        <button class="btn btn-outline-coffee" onclick="filterCat('Tueste Oscuro', this)">Tueste Oscuro</button>
+        <button class="btn btn-outline-coffee" onclick="filterCat('Cápsulas', this)">Cápsulas</button>
+        <button class="btn btn-outline-coffee" onclick="filterCat('Origen Especial', this)">Origen Especial</button>
+      </div>
+
+      <!-- Grilla de productos -->
+      <div class="row g-4" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- SISTEMA DE FIDELIZACIÓN POR PUNTOS (RF-038 a RF-042 / HU-09) -->
+  <section id="fidelizacion" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="text-uppercase fw-bold small" style="color: var(--coffee-accent);">Programa de Lealtad (HU-09 · RF-038 a RF-042)</span>
+        <h2 class="display-6 fw-bold mt-1">Club de Puntos Tantico Café</h2>
+        <p class="text-muted mx-auto" style="max-width: 700px;">
+          Cada $1.000 COP en compras suma 1 punto Tantico. Sube de nivel entre <strong>Espresso</strong>, <strong>Plata</strong> y <strong>Oro</strong>, recibe +100 puntos en tu cumpleaños y canjea recompensas directas.
+        </p>
+      </div>
+
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-5">
+          <div class="tier-card shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge bg-dark px-3 py-2" id="loyaltyTierBadge">Nivel Actual: Plata</span>
+              <span class="fw-bold text-success" id="loyaltyPointsText">620 Puntos</span>
+            </div>
+            <h4 class="brand-font fw-bold mb-2">Simulador Interactivo de Puntos</h4>
+            <p class="small text-muted mb-3">
+              Desliza el monto acumulado de tus compras o aplica tu bono anual de cumpleaños (RF-039) para calcular tu nivel y recompensas habilitadas:
+            </p>
+            <label for="pointsRange" class="form-label small fw-semibold">Puntos acumulados: <span id="sliderVal">620</span> pts</label>
+            <input type="range" class="form-range" min="50" max="1300" step="10" id="pointsRange" value="620" oninput="updateLoyalty(this.value)" />
+            <div class="progress mb-3" style="height: 12px;">
+              <div id="loyaltyProgress" class="progress-bar bg-warning" role="progressbar" style="width: 62%;"></div>
+            </div>
+            <div class="d-flex justify-content-between small text-muted mb-3">
+              <span>Espresso (&lt;500)</span>
+              <span>Plata (500–999)</span>
+              <span>Oro (1000+)</span>
+            </div>
+            <button class="btn btn-sm btn-outline-coffee w-100" onclick="claimBirthdayBonus()">
+              <i class="bi bi-gift me-1"></i> Aplicar Bono Anual de Cumpleaños (+100 pts · RF-039)
+            </button>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="row g-3 h-100">
+            <div class="col-md-4">
+              <div class="tier-card text-center">
+                <i class="bi bi-cup-fill fs-1 text-secondary"></i>
+                <h5 class="brand-font fw-bold mt-2">Nivel Espresso</h5>
+                <span class="badge bg-secondary mb-2">0 – 499 pts</span>
+                <p class="small text-muted mb-3">Canjea <strong>10% de descuento</strong> en tu pedido con <strong>300 puntos</strong> (RF-041).</p>
+                <button class="btn btn-sm btn-coffee w-100" onclick="redeemReward(300, '10% de Descuento')">Canjear (300 pts)</button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tier-card text-center border-warning">
+                <i class="bi bi-award-fill fs-1 text-warning"></i>
+                <h5 class="brand-font fw-bold mt-2">Nivel Plata</h5>
+                <span class="badge bg-warning text-dark mb-2">500 – 999 pts</span>
+                <p class="small text-muted mb-3">Canjea una <strong>bolsa de Café Especial 250 g gratis</strong> con <strong>500 puntos</strong>.</p>
+                <button class="btn btn-sm btn-coffee w-100" onclick="redeemReward(500, 'Café Especial 250g Gratis')">Canjear (500 pts)</button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="tier-card text-center">
+                <i class="bi bi-trophy-fill fs-1 text-success"></i>
+                <h5 class="brand-font fw-bold mt-2">Nivel Oro</h5>
+                <span class="badge bg-success mb-2">1000+ pts</span>
+                <p class="small text-muted mb-3">Canjea el <strong>Kit Barista Premium V60 + Microlote</strong> con <strong>1000 puntos</strong>.</p>
+                <button class="btn btn-sm btn-coffee w-100" onclick="redeemReward(1000, 'Kit Barista Premium')">Canjear (1000 pts)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL ADMINISTRATIVO DE ANALÍTICA Y KPIS (RF-051 a RF-054 / HU-15) -->
+  <section id="analitica" class="py-5 bg-white border-top border-bottom">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+        <div>
+          <span class="text-uppercase fw-bold small" style="color: var(--coffee-accent);">Inteligencia de Negocio (HU-15 · RF-051 a RF-054)</span>
+          <h2 class="display-6 fw-bold mt-1 mb-0">Dashboard de KPIs e Impacto Directo</h2>
+        </div>
+        <div class="d-flex gap-2 mt-3 mt-md-0">
+          <select id="periodSelect" class="form-select form-select-sm" onchange="updateDashboardPeriod(this.value)">
+            <option value="mes">Este mes (Noviembre 2026)</option>
+            <option value="trimestre">Últimos 90 días</option>
+            <option value="anio">Acumulado Anual 2026</option>
+          </select>
+          <button class="btn btn-sm btn-outline-coffee" onclick="exportCSVReport()">
+            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Exportar CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-md-3">
+          <div class="kpi-card">
+            <small class="text-muted d-block">Ventas Directas del Periodo</small>
+            <div class="fs-4 fw-bold mt-1" id="kpiSales">$18.450.000 COP</div>
+            <small class="text-success"><i class="bi bi-arrow-up-right"></i> +34% vs venta tradicional</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="kpi-card">
+            <small class="text-muted d-block">Pedidos Despachados</small>
+            <div class="fs-4 fw-bold mt-1" id="kpiOrders">164 órdenes</div>
+            <small class="text-muted">Trazabilidad 100% en línea</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="kpi-card">
+            <small class="text-muted d-block">Ticket Promedio</small>
+            <div class="fs-4 fw-bold mt-1" id="kpiTicket">$112.500 COP</div>
+            <small class="text-success">Envío gratis &gt; $150.000</small>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="kpi-card">
+            <small class="text-muted d-block">Origen Más Vendido</small>
+            <div class="fs-5 fw-bold mt-1">San Agustín Pink Bourbon</div>
+            <small class="text-warning"><i class="bi bi-star-fill"></i> 87.5 pts SCA</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="p-4 border rounded-4 bg-light h-100">
+            <h5 class="brand-font fw-bold mb-3">Tendencia Mensual de Ventas Directas (COP)</h5>
+            <canvas id="salesChart" height="150"></canvas>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="p-4 border rounded-4 bg-light h-100">
+            <h5 class="brand-font fw-bold mb-3">Participación por Categoría de Tueste</h5>
+            <canvas id="categoryChart" height="175"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO DE CONTACTO PARA CAFICULTORES Y CLIENTES (RF-043, RF-044 / HU-11) -->
+  <section id="contacto" class="py-5">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-5">
+          <span class="text-uppercase fw-bold small" style="color: var(--coffee-accent);">Vinculación de Productores (HU-11 · RF-043)</span>
+          <h2 class="display-6 fw-bold mt-1 mb-3">¿Eres caficultor del Huila o comprador mayorista?</h2>
+          <p class="text-muted mb-4">
+            En <strong>CoffeeCol / Tantico Café</strong> eliminamos la cadena de intermediación para que el productor reciba hasta un 42% más de margen directo sobre su cosecha de especialidad.
+          </p>
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <div class="bg-warning bg-opacity-25 p-3 rounded-3 text-dark"><i class="bi bi-geo-alt-fill fs-5"></i></div>
+            <div>
+              <h6 class="fw-bold mb-1">Centro de Tostión y Despacho</h6>
+              <p class="small text-muted mb-0">Neiva, Huila – SENA Centro de la Industria, la Empresa y los Servicios (CIES) · Ficha ADSO 3413974.</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <div class="bg-warning bg-opacity-25 p-3 rounded-3 text-dark"><i class="bi bi-envelope-check-fill fs-5"></i></div>
+            <div>
+              <h6 class="fw-bold mb-1">Canales Digitales y Soporte</h6>
+              <p class="small text-muted mb-0">contacto@coffeecol-huila.co · Atención lunes a sábado 8:00 a. m. – 6:00 p. m.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="bg-white p-4 p-md-5 rounded-4 shadow-sm border">
+            <h4 class="brand-font fw-bold mb-3">Formulario de Vinculación y Contacto Comercial</h4>
+            <form id="contactForm" onsubmit="submitContactForm(event)" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Nombre completo *</label>
+                  <input type="text" class="form-control" id="cName" required minlength="3" placeholder="Ej. Carlos Andrade" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Finca / Empresa / Municipio *</label>
+                  <input type="text" class="form-control" id="cCompany" required placeholder="Ej. Finca El Mirador – Pitalito" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Teléfono / WhatsApp *</label>
+                  <input type="tel" class="form-control" id="cPhone" required pattern="[0-9+\s-]{7,15}" placeholder="Ej. 315 482 9100" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Correo electrónico *</label>
+                  <input type="email" class="form-control" id="cEmail" required placeholder="productor@correo.com" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label small fw-semibold">Tipo de solicitud</label>
+                  <select class="form-select" id="cType">
+                    <option value="Caficultor">Quiero comercializar mi café especial en CoffeeCol</option>
+                    <option value="Mayorista">Cotización para tienda de especialidad / hotel / restaurante</option>
+                    <option value="Cliente">Consulta sobre pedido o suscripción mensual</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small fw-semibold">Comentarios o perfil de tu lote *</label>
+                  <textarea class="form-control" id="cMsg" rows="3" required minlength="10" placeholder="Cuéntanos variedad, altura, volumen disponible o requerimiento..."></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-coffee w-100 py-2">
+                    <i class="bi bi-send-check me-2"></i>Enviar Solicitud a Tantico Café
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div id="contactAlert" class="alert alert-success mt-3 d-none mb-0" role="alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-5">
+          <h5 class="brand-font text-white fw-bold">CoffeeCol / Tantico Café</h5>
+          <p class="small opacity-75">
+            Plataforma e-commerce de café colombiano de especialidad desarrollada bajo estándares IEEE 830-1998 e ISO/IEC/IEEE 29148:2018. Evidencia GA1-37371-AA4-EV01 – SENA CIES Neiva, Huila.
+          </p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-warning fw-bold">Equipo Desarrollador (ADSO 3413974)</h6>
+          <ul class="list-unstyled small opacity-75 mb-0">
+            <li>• Juan Mathias Palacios Botello</li>
+            <li>• Adrian Estiben Garrido Pedroza</li>
+            <li>• Joan Sebastian Vargas Ramos</li>
+            <li class="mt-1 text-warning">Instructor: Ing. Eddier Yair Liberato Cuenca</li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-warning fw-bold">Normativa y Calidad</h6>
+          <ul class="list-unstyled small opacity-75 mb-0">
+            <li>• Ley 1581 de 2012 (Habeas Data)</li>
+            <li>• Ley 527 de 1999 (E-Commerce)</li>
+            <li>• Diseño Responsivo Bootstrap 5.3</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="border-secondary my-4" />
+      <div class="d-flex flex-column flex-sm-row justify-content-between small opacity-75">
+        <span>© 2026 CoffeeCol / Tantico Café. Todos los derechos reservados.</span>
+        <span>Transversal TIC – RAP 04 (GA1-37371-AA4-EV01)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN FLOTANTE CARRITO (RF-015) -->
+  <button class="fab-cart" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer" aria-label="Abrir carrito de compras">
+    <i class="bi bi-cart3"></i>
+    <span id="fabCartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.75rem;">0</span>
+  </button>
+
+  <!-- OFFCANVAS CARRITO DE COMPRAS (RF-011 a RF-016) -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer" aria-labelledby="cartDrawerLabel">
+    <div class="offcanvas-header bg-dark text-white">
+      <h5 class="offcanvas-title brand-font" id="cartDrawerLabel"><i class="bi bi-bag-heart me-2 text-warning"></i>Tu Carrito Tantico</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+      <div id="cartItemsList" class="flex-grow-1 overflow-auto mb-3"></div>
+      <div class="border-top pt-3">
+        <div class="d-flex justify-content-between small mb-1">
+          <span>Subtotal:</span>
+          <strong id="cartSubtotal">$0 COP</strong>
+        </div>
+        <div class="d-flex justify-content-between small mb-1">
+          <span>Envío (Gratis &gt; $150.000 COP):</span>
+          <strong id="cartShipping">$0 COP</strong>
+        </div>
+        <div class="d-flex justify-content-between fs-5 fw-bold text-dark border-top pt-2 mb-3">
+          <span>Total a pagar:</span>
+          <span id="cartTotal">$0 COP</span>
+        </div>
+        <button class="btn btn-coffee w-100" data-bs-toggle="modal" data-bs-target="#checkoutModal" id="btnOpenCheckout" disabled>
+          <i class="bi bi-credit-card me-2"></i>Continuar al Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CHECKOUT (RF-017 a RF-021 / HU-06) -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title brand-font">Confirmación de Pedido (Checkout)</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="checkoutForm" onsubmit="processCheckout(event)">
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Nombre *</label>
+                <input type="text" class="form-control" id="chkName" required />
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Apellido *</label>
+                <input type="text" class="form-control" id="chkLast" required />
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Correo electrónico *</label>
+                <input type="email" class="form-control" id="chkEmail" required />
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold">Teléfono *</label>
+                <input type="tel" class="form-control" id="chkPhone" required />
+              </div>
+              <div class="col-5">
+                <label class="form-label small fw-semibold">Ciudad *</label>
+                <input type="text" class="form-control" id="chkCity" value="Neiva, Huila" required />
+              </div>
+              <div class="col-7">
+                <label class="form-label small fw-semibold">Dirección de entrega *</label>
+                <input type="text" class="form-control" id="chkAddr" required placeholder="Calle / Carrera / Barrio" />
+              </div>
+            </div>
+            <div class="bg-light p-3 rounded-3 mt-3 small">
+              <div class="d-flex justify-content-between">
+                <span>Total verificado del pedido:</span>
+                <strong id="chkSummaryTotal">$0 COP</strong>
+              </div>
+              <div class="text-success mt-1"><i class="bi bi-award me-1"></i>Acumularás <strong id="chkPointsEarned">0</strong> puntos Tantico en esta compra.</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Volver</button>
+            <button type="submit" class="btn btn-coffee">Confirmar Orden</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL INICIO DE SESIÓN (RF-023, RF-024 / HU-03) -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title brand-font">Acceso CoffeeCol</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center p-4">
+          <p class="small text-muted mb-3">Inicia sesión con Firebase Auth para sincronizar tus favoritos y puntos de fidelización:</p>
+          <button class="btn btn-outline-dark w-100 mb-2" onclick="simulateLogin('Juan Mathias Palacios')">
+            <i class="bi bi-google text-danger me-2"></i>Continuar con Google
+          </button>
+          <button class="btn btn-coffee w-100" onclick="simulateLogin('Cliente Tantico')">
+            <i class="bi bi-envelope-paper me-2"></i>Enviar Magic Link
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    // Datos de orígenes del Huila (RF-002)
+    const ORIGINS = {
+      neiva: {
+        sub: 'Subregión Norte · Denominación de Origen Huila',
+        title: 'Neiva – Veredas San Luis y El Colegio',
+        desc: 'Centro de acopio, tostión artesanal y microlotes cultivados en la cordillera Oriental. Destaca por su balance entre dulzor a caña panelera, cuerpo sedoso y notas achocolatadas.',
+        alt: '1.450 – 1.750 m s. n. m.',
+        var: 'Castillo, Caturra, Colombia',
+        notes: 'Chocolate oscuro, nuez, caramelo',
+        prod: '34 familias caficultoras'
+      },
+      garzon: {
+        sub: 'Subregión Centro · Capital Diocesana y Cafetera',
+        title: 'Garzón – Veredas San Gerardo y Recreo',
+        desc: 'Cafés de altura cultivados bajo sombrío con brisas del macizo y del valle del Magdalena. Perfil limpio, dulce y balanceado con fragancia floral intensa.',
+        alt: '1.600 – 1.900 m s. n. m.',
+        var: 'Caturra, Tabi, Bourbon Rosado',
+        notes: 'Miel de abeja, mandarina, almendra',
+        prod: '48 familias caficultoras'
+      },
+      pitalito: {
+        sub: 'Subregión Sur · Mayor Productor de Café de Colombia',
+        title: 'Pitalito – Corregimiento Bruselas y Guacacallo',
+        desc: 'Cuna de múltiples ganadores de Taza de la Excelencia. Microclimas húmedos de montaña que producen cafés exóticos de alta puntuación SCA (86 a 90 puntos).',
+        alt: '1.650 – 2.000 m s. n. m.',
+        var: 'Geisha, Pink Bourbon, Pacamara',
+        notes: 'Frutos rojos, jazmín, bergamota',
+        prod: '72 familias caficultoras'
+      },
+      sanagustin: {
+        sub: 'Subregión Sur · Macizo Colombiano Patrimonial',
+        title: 'San Agustín – Suelos Volcánicos del Macizo',
+        desc: 'Suelos ricos en ceniza volcánica y aguas puras del Macizo Colombiano. Acidez brillante, cuerpo jugoso y postgusto prolongado a cacao fino y mora silvestre.',
+        alt: '1.750 – 2.050 m s. n. m.',
+        var: 'Pink Bourbon, Caturra Chiroso, Geisha',
+        notes: 'Mora, flor de azahar, panela',
+        prod: '56 familias caficultoras'
+      },
+      acevedo: {
+        sub: 'Subregión Sur · Corredor Parque Cueva de los Guácharos',
+        title: 'Acevedo – San Adolfo y Alta Montaña',
+        desc: 'Caficultura sostenible de conservación ambiental con fermentaciones controladas que resaltan notas vinosas y frutales.',
+        alt: '1.600 – 1.920 m s. n. m.',
+        var: 'Tabi, Castillo, Bourbon Sidra',
+        notes: 'Cereza madura, uva pasa, cacao',
+        prod: '41 familias caficultoras'
+      },
+      algeciras: {
+        sub: 'Subregión Norte · Cordillera Oriental',
+        title: 'Algeciras – Despensa Agrícola y Cafetera',
+        desc: 'Lotes tradicionales lavados al sol en marquesinas con taza limpia, dulzor pronunciado y cuerpo cremoso ideal para espresso.',
+        alt: '1.550 – 1.850 m s. n. m.',
+        var: 'Castillo, Colombia, Cenicafé 1',
+        notes: 'Caramelo, avellana, caña dulce',
+        prod: '29 familias caficultoras'
+      }
+    };
+
+    function selectOrigin(key) {
+      const o = ORIGINS[key];
+      if (!o) return;
+      document.getElementById('originSubregion').textContent = o.sub;
+      document.getElementById('originTitle').textContent = o.title;
+      document.getElementById('originDesc').textContent = o.desc;
+      document.getElementById('originAltitude').textContent = o.alt;
+      document.getElementById('originVarieties').textContent = o.var;
+      document.getElementById('originNotes').textContent = o.notes;
+      document.getElementById('originProducers').textContent = o.prod;
+      document.querySelectorAll('.muni-node').forEach(n => n.classList.remove('active'));
+      const node = document.getElementById('node-' + key);
+      if (node) node.classList.add('active');
+    }
+
+    // Catálogo de productos (5 categorías del SRS RF-006)
+    const PRODUCTS = [
+      { id: 1, name: 'Bruselas Geisha Lavado 340 g', cat: 'Tueste Claro', origin: 'Pitalito', rating: 4.9, price: 54000, oldPrice: 60000, img: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80', notes: 'Jazmín, durazno y miel · SCA 88.5' },
+      { id: 2, name: 'Garzón Honey Caturra 500 g', cat: 'Tueste Claro', origin: 'Garzón', rating: 4.8, price: 39000, oldPrice: null, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80', notes: 'Mandarina, flor de café y caramelo' },
+      { id: 3, name: 'Tantico Tradición Neiva 500 g', cat: 'Tueste Medio', origin: 'Neiva', rating: 4.9, price: 34000, oldPrice: 38000, img: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=600&q=80', notes: 'Chocolate con leche, nuez y panela' },
+      { id: 4, name: 'Acevedo Tabi Natural 500 g', cat: 'Tueste Medio', origin: 'Acevedo', rating: 4.7, price: 42000, oldPrice: null, img: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80', notes: 'Frutos rojos, cacao y cuerpo sedoso' },
+      { id: 5, name: 'San Agustín Pink Bourbon 500 g', cat: 'Origen Especial', origin: 'San Agustín', rating: 5.0, price: 48000, oldPrice: 55000, img: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=600&q=80', notes: 'Mora silvestre, azahar y acidez brillante' },
+      { id: 6, name: 'Algeciras Espresso Intenso 500 g', cat: 'Tueste Oscuro', origin: 'Algeciras', rating: 4.8, price: 36000, oldPrice: null, img: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=80', notes: 'Cacao amargo, avellana tostada y crema densa' },
+      { id: 7, name: 'Cápsulas Tantico Espresso x10 uds', cat: 'Cápsulas', origin: 'Neiva', rating: 4.7, price: 28000, oldPrice: 32000, img: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80', notes: 'Compatibles Nespresso® · 100% Huila' },
+      { id: 8, name: 'Microlote Macizo Sidra 340 g', cat: 'Origen Especial', origin: 'San Agustín', rating: 5.0, price: 58000, oldPrice: null, img: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80', notes: 'Fermentación anaeróbica 72h · SCA 89' }
+    ];
+
+    let activeCategory = 'todos';
+    let cart = JSON.parse(localStorage.getItem('coffeecol_cart') || '[]');
+    let favs = JSON.parse(localStorage.getItem('coffeecol_favs') || '[5]');
+
+    const fmtCOP = n => '$' + Number(n).toLocaleString('es-CO') + ' COP';
+
+    function filterCat(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('#categoryFilters button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
+    }
+
+    function toggleFav(id) {
+      if (favs.includes(id)) favs = favs.filter(x => x !== id);
+      else favs.push(id);
+      localStorage.setItem('coffeecol_favs', JSON.stringify(favs));
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const q = (document.getElementById('searchInput').value || '').toLowerCase();
+      const grid = document.getElementById('productGrid');
+      const list = PRODUCTS.filter(p =>
+        (activeCategory === 'todos' || p.cat === activeCategory) &&
+        (p.name.toLowerCase().includes(q) || p.origin.toLowerCase().includes(q) || p.notes.toLowerCase().includes(q))
+      );
+      grid.innerHTML = list.map(p => `
+        <div class="col-sm-6 col-lg-3">
+          <div class="product-card d-flex flex-column position-relative">
+            <button class="fav-btn ${favs.includes(p.id) ? 'active' : ''}" onclick="toggleFav(${p.id})" title="Marcar favorito (RF-035)">
+              <i class="bi ${favs.includes(p.id) ? 'bi-heart-fill' : 'bi-heart'}"></i>
+            </button>
+            <img src="${p.img}" alt="${p.name}" class="product-img" loading="lazy" />
+            <div class="p-3 d-flex flex-column flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="badge bg-light text-dark border">${p.cat}</span>
+                <small class="text-warning fw-bold"><i class="bi bi-star-fill"></i> ${p.rating}</small>
+              </div>
+              <h6 class="fw-bold mb-1">${p.name}</h6>
+              <small class="text-muted mb-2"><i class="bi bi-geo-alt"></i> Origen: ${p.origin}, Huila</small>
+              <p class="small text-secondary mb-3 flex-grow-1">${p.notes}</p>
+              <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                <div>
+                  ${p.oldPrice ? `<small class="text-muted text-decoration-line-through d-block">${fmtCOP(p.oldPrice)}</small>` : ''}
+                  <span class="fw-bold fs-6" style="color: var(--coffee-primary);">${fmtCOP(p.price)}</span>
+                </div>
+                <button class="btn btn-sm btn-coffee" onclick="addToCart(${p.id})">
+                  <i class="bi bi-cart-plus"></i> Agregar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Carrito de compras con cálculo de envío RF-014 ($12.000 o gratis > $150.000)
+    function addToCart(id) {
+      const prod = PRODUCTS.find(p => p.id === id);
+      if (!prod) return;
+      const item = cart.find(i => i.id === id);
+      if (item) item.qty += 1;
+      else cart.push({ id: prod.id, name: prod.name, price: prod.price, qty: 1 });
+      saveAndRenderCart();
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      saveAndRenderCart();
+    }
+
+    function saveAndRenderCart() {
+      localStorage.setItem('coffeecol_cart', JSON.stringify(cart));
+      const count = cart.reduce((acc, i) => acc + i.qty, 0);
+      document.getElementById('navCartCount').textContent = count;
+      document.getElementById('fabCartCount').textContent = count;
+
+      const box = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        box.innerHTML = `<div class="text-center text-muted my-5"><i class="bi bi-cup-hot fs-1 d-block mb-2"></i>Tu carrito está vacío. Agrega un café especial del Huila.</div>`;
+      } else {
+        box.innerHTML = cart.map(i => `
+          <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+            <div>
+              <div class="fw-semibold small">${i.name}</div>
+              <small class="text-muted">${fmtCOP(i.price)} x ${i.qty}</small>
+            </div>
+            <div class="btn-group btn-group-sm">
+              <button class="btn btn-outline-secondary" onclick="changeQty(${i.id}, -1)">-</button>
+              <button class="btn btn-outline-secondary" disabled>${i.qty}</button>
+              <button class="btn btn-outline-secondary" onclick="changeQty(${i.id}, 1)">+</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const subtotal = cart.reduce((acc, i) => acc + i.price * i.qty, 0);
+      const shipping = subtotal === 0 ? 0 : (subtotal > 150000 ? 0 : 12000);
+      const total = subtotal + shipping;
+
+      document.getElementById('cartSubtotal').textContent = fmtCOP(subtotal);
+      document.getElementById('cartShipping').textContent = shipping === 0 && subtotal > 0 ? 'GRATIS (>$150.000)' : fmtCOP(shipping);
+      document.getElementById('cartTotal').textContent = fmtCOP(total);
+      document.getElementById('chkSummaryTotal').textContent = fmtCOP(total);
+      document.getElementById('chkPointsEarned').textContent = Math.floor(subtotal / 1000);
+      document.getElementById('btnOpenCheckout').disabled = cart.length === 0;
+    }
+
+    function processCheckout(e) {
+      e.preventDefault();
+      const orderId = 'ORD-HUILA-' + Math.floor(100000 + Math.random() * 900000);
+      const pts = document.getElementById('chkPointsEarned').textContent;
+      cart = [];
+      saveAndRenderCart();
+      bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+      alert(`¡Pedido confirmado con éxito!\nNúmero de orden: ${orderId}\nEstado: Pendiente de despacho\nPuntos Tantico acreditados: +${pts} pts`);
+    }
+
+    // Fidelización (RF-038 a RF-042)
+    function updateLoyalty(val) {
+      const pts = Number(val);
+      document.getElementById('sliderVal').textContent = pts;
+      document.getElementById('loyaltyPointsText').textContent = pts + ' Puntos';
+      const tier = pts >= 1000 ? 'Oro' : (pts >= 500 ? 'Plata' : 'Espresso');
+      document.getElementById('loyaltyTierBadge').textContent = 'Nivel Actual: ' + tier;
+      document.getElementById('loyaltyProgress').style.width = Math.min(100, Math.round((pts / 1000) * 100)) + '%';
+    }
+
+    function claimBirthdayBonus() {
+      const slider = document.getElementById('pointsRange');
+      slider.value = Math.min(1300, Number(slider.value) + 100);
+      updateLoyalty(slider.value);
+      alert('¡Bono anual de cumpleaños (+100 puntos Tantico, RF-039) aplicado con éxito!');
+    }
+
+    function redeemReward(cost, name) {
+      const slider = document.getElementById('pointsRange');
+      const current = Number(slider.value);
+      if (current < cost) {
+        alert(`Necesitas ${cost} puntos para canjear "${name}". Actualmente tienes ${current} puntos.`);
+        return;
+      }
+      slider.value = current - cost;
+      updateLoyalty(slider.value);
+      alert(`¡Recompensa "${name}" canjeada con éxito (-${cost} pts)!`);
+    }
+
+    function simulateLogin(name) {
+      document.getElementById('userLabel').textContent = name;
+      bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+    }
+
+    function submitContactForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('cName').value;
+      const comp = document.getElementById('cCompany').value;
+      const type = document.getElementById('cType').value;
+      const alertBox = document.getElementById('contactAlert');
+      alertBox.classList.remove('d-none');
+      alertBox.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i><strong>¡Solicitud registrada!</strong> Gracias, <strong>${name}</strong> (${comp}). Nuestro equipo de originación en Neiva atenderá tu solicitud de tipo <em>${type}</em>.`;
+      document.getElementById('contactForm').reset();
+    }
+
+    // Gráficos Chart.js v4 (RF-052)
+    let salesChart, categoryChart;
+    function initCharts() {
+      const ctx1 = document.getElementById('salesChart');
+      salesChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov'],
+          datasets: [{
+            label: 'Ventas Directas (Millones COP)',
+            data: [9.2, 11.4, 12.8, 14.5, 16.9, 18.45],
+            backgroundColor: '#c87d4b',
+            borderRadius: 6
+          }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+
+      const ctx2 = document.getElementById('categoryChart');
+      categoryChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Tueste Medio', 'Origen Especial', 'Tueste Claro', 'Tueste Oscuro', 'Cápsulas'],
+          datasets: [{
+            data: [34, 28, 18, 12, 8],
+            backgroundColor: ['#5c3317', '#c87d4b', '#d4a359', '#2c1810', '#8d6e63']
+          }]
+        },
+        options: { responsive: true }
+      });
+    }
+
+    function updateDashboardPeriod(p) {
+      if (p === 'mes') {
+        document.getElementById('kpiSales').textContent = '$18.450.000 COP';
+        document.getElementById('kpiOrders').textContent = '164 órdenes';
+      } else if (p === 'trimestre') {
+        document.getElementById('kpiSales').textContent = '$49.850.000 COP';
+        document.getElementById('kpiOrders').textContent = '442 órdenes';
+      } else {
+        document.getElementById('kpiSales').textContent = '$142.600.000 COP';
+        document.getElementById('kpiOrders').textContent = '1.268 órdenes';
+      }
+    }
+
+    function exportCSVReport() {
+      const rows = [
+        ['Producto', 'Categoria', 'Origen', 'Precio_COP', 'Calificacion'],
+        ...PRODUCTS.map(p => [p.name, p.cat, p.origin, p.price, p.rating])
+      ];
+      const csv = rows.map(r => r.join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Reporte_CoffeeCol_TanticoCafe.csv';
+      a.click();
+    }
+
+    // Inicialización
+    addToCart(5); // Producto inicial de demostración en el carrito
+    renderProducts();
+    initCharts();
+  </script>
+</body>
+</html>
